@@ -29,7 +29,13 @@ const steps = [
 ];
 
 export default function UserInput() {
-  const { formData, handleAboutMe, handlePersonalInfo } = useFormHandler();
+  const {
+    formData,
+    handleAboutMe,
+    handlePersonalInfo,
+    handleExperience,
+    handleSkills,
+  } = useFormHandler();
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = () => {
@@ -49,8 +55,9 @@ export default function UserInput() {
       case "personal":
         return { handlePersonalInfo };
       case "social":
+        return {};
       case "experience":
-        return {}; // Add props for these components when needed
+        return { handleExperience, handleSkills }; // Add props for these components when needed
       default:
         return {};
     }

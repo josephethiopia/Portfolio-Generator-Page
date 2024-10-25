@@ -16,15 +16,25 @@ const useFormHandler = () => {
       github: "",
       twitter: "",
     },
-    experience_skills: {
-      experience: "",
-      skills: "",
-    },
+    experience: "",
+    skills: "",
   });
   const handleAboutMe = (e: any) => {
     setFormData({
       ...formData,
       about_me: e.target.value,
+    });
+  };
+  const handleExperience = (e: any) => {
+    setFormData({
+      ...formData,
+      experience: e.target.value,
+    });
+  };
+  const handleSkills = (e: any) => {
+    setFormData({
+      ...formData,
+      skills: e.target.value,
     });
   };
 
@@ -42,6 +52,8 @@ const useFormHandler = () => {
     formData,
     handleAboutMe,
     handlePersonalInfo,
+    handleExperience,
+    handleSkills,
   };
 };
 
