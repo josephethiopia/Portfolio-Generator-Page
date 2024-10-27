@@ -10,9 +10,10 @@ import {
 
 interface AboutMeProps {
   handleAboutMe: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  formData: any;
 }
 
-export default function AboutMe({ handleAboutMe }: AboutMeProps) {
+export default function AboutMe({ handleAboutMe, formData }: AboutMeProps) {
   return (
     <Card className="w-full">
       <CardHeader>
@@ -31,6 +32,7 @@ export default function AboutMe({ handleAboutMe }: AboutMeProps) {
             placeholder="I'm a passionate developer with experience in..."
             className="min-h-[200px]"
             onChange={handleAboutMe}
+            value={formData.about_me}
           />
           <p className="text-sm text-muted-foreground">
             Please include relevant information such as your background, skills,

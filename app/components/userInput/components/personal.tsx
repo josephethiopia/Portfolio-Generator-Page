@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function Personal({ handlePersonalInfo }: any) {
+export default function Personal({ handlePersonalInfo, formData }: any) {
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Personal Information</h2>
@@ -15,6 +15,7 @@ export default function Personal({ handlePersonalInfo }: any) {
             onChange={(e) => handlePersonalInfo(e, "first_name")}
             placeholder="Enter your first name"
             required
+            value={formData.personal_info.first_name}
           />
         </div>
         <div className="space-y-2">
@@ -26,6 +27,7 @@ export default function Personal({ handlePersonalInfo }: any) {
             onChange={(e) => handlePersonalInfo(e, "last_name")}
             placeholder="Enter your last name"
             required
+            value={formData.personal_info.last_name}
           />
         </div>
         <div className="space-y-2">
@@ -37,6 +39,7 @@ export default function Personal({ handlePersonalInfo }: any) {
             onChange={(e) => handlePersonalInfo(e, "email")}
             placeholder="Enter your email address"
             required
+            value={formData.personal_info.email}
           />
         </div>
         <div className="space-y-2">
@@ -47,6 +50,7 @@ export default function Personal({ handlePersonalInfo }: any) {
             name="phone"
             onChange={(e) => handlePersonalInfo(e, "phone")}
             placeholder="Enter your phone number"
+            value={formData.personal_info.phone}
           />
         </div>
         <div className="space-y-2">
@@ -57,6 +61,7 @@ export default function Personal({ handlePersonalInfo }: any) {
             name="occupation"
             onChange={(e) => handlePersonalInfo(e, "occupation")}
             placeholder="Enter your occupation"
+            value={formData.personal_info.occupation}
           />
         </div>
         <div className="space-y-2">
@@ -67,6 +72,7 @@ export default function Personal({ handlePersonalInfo }: any) {
             name="location"
             onChange={(e) => handlePersonalInfo(e, "location")}
             placeholder="Enter your location"
+            value={formData.personal_info.location}
           />
         </div>
       </div>

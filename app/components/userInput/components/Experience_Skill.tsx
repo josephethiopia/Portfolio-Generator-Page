@@ -12,11 +12,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 interface ExperienceAndSkillsProps {
   handleSkillsChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   handleExperienceChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  formData: any;
 }
 
 export default function ExperienceAndSkills({
   handleSkillsChange,
   handleExperienceChange,
+  formData,
 }: ExperienceAndSkillsProps) {
   return (
     <Card className="w-full">
@@ -39,13 +41,24 @@ export default function ExperienceAndSkills({
               <Textarea
                 id="skills"
                 name="skills"
-                placeholder="List your key skills, technologies you're proficient in, and any relevant certifications..."
+                placeholder="List your skills, one per line. For example:
+Communication
+Leadership
+Problem-solving
+Time management
+Teamwork
+Adaptability
+Creativity
+Critical thinking
+Emotional intelligence
+Project management"
                 className="min-h-[200px]"
                 onChange={handleSkillsChange}
+                value={formData.skills}
               />
               <p className="text-sm text-muted-foreground">
                 Include both technical and soft skills that are relevant to your
-                field.
+                field. List each skill on a new line.
               </p>
             </div>
           </TabsContent>
@@ -55,13 +68,15 @@ export default function ExperienceAndSkills({
               <Textarea
                 id="experience"
                 name="experience"
-                placeholder="Describe your work history, including job titles, companies, dates, and key responsibilities..."
+                placeholder="Describe your work experience briefly. Include job title, company, duration, key responsibilities, and achievements."
                 className="min-h-[200px]"
                 onChange={handleExperienceChange}
+                value={formData.experience}
               />
               <p className="text-sm text-muted-foreground">
                 Focus on experiences that are most relevant to your career goals
-                and the position you're seeking.
+                and the position you're seeking. Use the format provided in the
+                placeholder.
               </p>
             </div>
           </TabsContent>
