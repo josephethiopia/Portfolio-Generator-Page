@@ -18,13 +18,12 @@ import {
 } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ChevronLeft, ChevronRight, CloudCog } from "lucide-react";
-import AboutMe from "./components/about";
-import Personal from "./components/personal";
-import SocialLinks from "./components/social_links";
-import ExperienceAndSkills from "./components/Experience_Skill";
-import useFormHandler from "./components/stateHandler";
-import Cv from "./components/cv";
-import useFormStore from "./components/stateHandler";
+import AboutMe from "../components/userInput/components/about";
+import Personal from "../components/userInput/components/personal";
+import SocialLinks from "../components/userInput/components/social_links";
+import ExperienceAndSkills from "../components/userInput/components/Experience_Skill";
+import Cv from "../components/userInput/components/cv";
+import useFormStore from "../components/userInput/components/stateHandler";
 import { useRouter } from 'next/navigation';
 
 const steps = [

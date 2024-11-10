@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function Personal({ handlePersonalInfo, formData }: any) {
   return (
@@ -73,6 +74,17 @@ export default function Personal({ handlePersonalInfo, formData }: any) {
             onChange={(e) => handlePersonalInfo(e, "location")}
             placeholder="Enter your location"
             value={formData.personal_info.location}
+          />
+        </div>
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="additional_information">Additional Information</Label>
+          <Textarea
+            id="additional_information"
+            name="additional_information"
+            onChange={(e) => handlePersonalInfo(e, "additional_information")}
+            placeholder="Enter any additional you think is important for your prefered template."
+            value={formData.personal_info.additional_information}
+            className="min-h-[120px]"
           />
         </div>
       </div>
