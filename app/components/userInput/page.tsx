@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -44,7 +45,6 @@ export default function UserInput() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
   const handleNext = async () => {
     if (currentStep === steps.length - 1) {
       try {
@@ -96,7 +96,16 @@ export default function UserInput() {
       console.log('formattedData updated:', formattedData);
     }
   }, [formattedData]);
-
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/test', {
+        data: {data:formData , name: 'developer'}
+      })
+      console.log(response.data)
+    } catch (error) {
+      console.log('There is an error somewehere' , error instanceof Error ? error.message : 'Unknown error')
+    }
+  }
   return (
     <div className="flex items-center justify-center min-h-screen bg-background p-4">
       <Card className="w-full max-w-4xl mx-auto">
@@ -170,7 +179,7 @@ export default function UserInput() {
             <ChevronLeft className="mr-2 h-4 w-4" /> Previous
           </Button>
           <Button 
-            onClick={handleNext} 
+            onClick={currentStep === steps.length - 1 ? handleSubmit : handleNext}
             className="w-full sm:w-auto"
             disabled={isLoading}
           >
