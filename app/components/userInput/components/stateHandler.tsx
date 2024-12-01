@@ -39,6 +39,10 @@ interface FormState {
       file: File | null;
       fileName: string;
     };
+    profileImage: {
+      file: File | null;
+      fileName: string;
+    };
   };
   setFormattedData: (data: any) => void;
   setFormData: (data: any) => void;
@@ -51,6 +55,8 @@ interface FormState {
   removeSocialLinks: (index: number) => void;
   handleCvFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleCvUpload: () => void;
+  handleImageFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleImageUpload: () => Promise<void>;
   processDataWithAI: (data: any) => Promise<any>;
 }
 
@@ -83,6 +89,10 @@ const useFormStore = create<FormState>()(
         experience: "",
         skills: "",
         cv: {
+          file: null,
+          fileName: "",
+        },
+        profileImage: {
           file: null,
           fileName: "",
         },
@@ -160,6 +170,29 @@ const useFormStore = create<FormState>()(
         if (state.formData.cv.file) {
           console.log("Uploading file:", state.formData.cv.file);
           alert(`File "${state.formData.cv.fileName}" uploaded successfully!`);
+        } else {
+          alert("Please select a file first");
+        }
+        return state;
+      }),
+      handleImageFileChange: (e) => set((state) => {
+        if (e.target.files && e.target.files[0]) {
+          return {
+            formData: {
+              ...state.formData,
+              profileImage: {
+                file: e.target.files[0],
+                fileName: e.target.files[0].name,
+              },
+            }
+          };
+        }
+        return state;
+      }),
+      handleImageUpload: async () => set((state) => {
+        if (state.formData.profileImage.file) {
+          console.log("Uploading file:", state.formData.profileImage.file);
+          alert(`File "${state.formData.profileImage.fileName}" uploaded successfully!`);
         } else {
           alert("Please select a file first");
         }
@@ -248,7 +281,7 @@ Return the formatted JSON object with correct field names and structure. Here is
       }
     }),
     {
-      name: 'form-storage', // unique name for localStorage key
+      name: 'form-storage',
     }
   )
 );

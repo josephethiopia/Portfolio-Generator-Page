@@ -23,10 +23,11 @@ import AboutMe from "./components/about";
 import Personal from "./components/personal";
 import SocialLinks from "./components/social_links";
 import ExperienceAndSkills from "./components/Experience_Skill";
-import useFormHandler from "./components/stateHandler";
+import ProfileImageUpload from "./components/profile-img-upload";
 import Cv from "./components/cv";
 import useFormStore from "./components/stateHandler";
 import { useRouter } from 'next/navigation';
+import { convertFileToBase64, compressImage } from '@/app/utils/fileUpload';
 
 const steps = [
   { id: "about", title: "About Me", component: AboutMe },
@@ -38,6 +39,7 @@ const steps = [
     component: ExperienceAndSkills,
   },
   { id: "cv", title: "Upload your CV", component: Cv },
+  { id: "profile-image", title: "Upload your Profile Image", component: ProfileImageUpload },
 ];
 
 export default function UserInput() {
@@ -86,6 +88,12 @@ export default function UserInput() {
         return { handleExperienceChange, handleSkillsChange, formData };
       case "cv":
         return { handleCvFileChange, handleCvUpload, formData };
+      case "profile-image":
+        return { 
+          handleImageFileChange: useFormStore.getState().handleImageFileChange, 
+          handleImageUpload: useFormStore.getState().handleImageUpload,
+          formData: formData 
+        };
       default:
         return {};
     }
@@ -98,14 +106,50 @@ export default function UserInput() {
   }, [formattedData]);
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/test', {
-        data: {data:formData , name: 'developer'}
-      })
-      console.log(response.data)
+      setIsLoading(true);
+  
+      // Prepare files
+      let profileImageData = null;
+      let cvData = null;
+  
+      // Handle profile image
+      if (formData.profileImage?.file instanceof Blob) {
+        const base64Image = await convertFileToBase64(formData.profileImage.file);
+        profileImageData = await compressImage(base64Image);
+      }
+  
+      // Handle CV
+      if (formData.cv?.file instanceof Blob) {
+        cvData = await convertFileToBase64(formData.cv.file);
+      }
+  
+      // Prepare the payload
+      const payload = {
+        data: formData,
+        name: 'developer',
+        files: {
+          ...(profileImageData && { profileImage: profileImageData }),
+          ...(cvData && { cv: cvData })
+        }
+      };
+  
+      const response = await axios.post('http://localhost:5000/api/test', payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        maxBodyLength: Infinity,
+        maxContentLength: Infinity,
+      });
+  
+      console.log(response.data);
+      setIsLoading(false);
+      router.push('/');
+      
     } catch (error) {
-      console.log('There is an error somewehere' , error instanceof Error ? error.message : 'Unknown error')
+      setIsLoading(false);
+      console.error('Error:', error instanceof Error ? error.message : 'Unknown error');
     }
-  }
+  };
   return (
     <div className="flex items-center justify-center min-h-screen bg-background p-4">
       <Card className="w-full max-w-4xl mx-auto">
